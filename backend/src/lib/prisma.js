@@ -1,24 +1,16 @@
-// src/lib/prisma.js
-
 const { PrismaClient } = require('@prisma/client');
-const { PrismaPg }     = require('@prisma/adapter-pg');
-const { Pool }         = require('pg');
 
-// ─────────────────────────────────────────
-// SSL :
-// - En local (dev)  → on ignore le certificat
-// - En production   → SSL strict activé
-// ─────────────────────────────────────────
-const estEnProduction = process.env.NODE_ENV === 'production';
+let prisma;
 
-const pool = new Pool({
-  connectionString: process.env.DATABASE_URL,
-  ssl: estEnProduction
-    ? { rejectUnauthorized: true }   // prod → SSL strict
-    : { rejectUnauthorized: false }, // dev  → SSL souple
-});
-
-const adapter = new PrismaPg(pool);
-const prisma  = new PrismaClient({ adapter });
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient();
+} else {
+  if (!global.__prisma) {
+    global.__prisma = new PrismaClient({
+      log: ['query', 'error', 'warn'],
+    });
+  }
+  prisma = global.__prisma;
+}
 
 module.exports = prisma;
