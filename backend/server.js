@@ -1,22 +1,32 @@
 const express = require('express');
 const cors    = require('cors');
 const dotenv  = require('dotenv');
+require('dotenv').config();
 
 dotenv.config();
 
 const app = express();
 
 // ─── Middlewares ──────────────────────────────────────────────────────────────
-app.use(cors({ origin: process.env.FRONTEND_URL || '*' }));
+app.use(cors({
+  origin:      process.env.FRONTEND_URL || 'http://localhost:5173',
+  credentials: true,
+}));
 app.use(express.json());
 
 // ─── Routes ───────────────────────────────────────────────────────────────────
-app.use('/api/auth',     require('./src/routes/auth'));
-app.use('/api/produits', require('./src/routes/produits'));
+app.use('/api/auth',      require('./src/routes/auth'));
+app.use('/api/produits',  require('./src/routes/produits'));
+app.use('/api/commandes', require('./src/routes/commandes'));
+app.use('/api/utilisateurs', require('./src/routes/utilisateurs'));
 
 // Health check
 app.get('/', (req, res) => {
-  res.json({ message: '🥛 API Laiterie Nasoo opérationnelle' });
+  res.json({
+    message: '🥛 API Laiterie Nasoo opérationnelle',
+    version: '1.0.0',
+    status: 'ok'
+  });
 });
 
 // ─── 404 ──────────────────────────────────────────────────────────────────────

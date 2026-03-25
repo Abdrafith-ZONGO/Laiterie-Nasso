@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { getProduits } from '../services/api';
+import { usePanier } from '../context/PanierContext';
 import { FiShoppingCart, FiArrowRight, FiStar } from 'react-icons/fi';
 
 const C = {
@@ -174,9 +175,10 @@ function CarteProduit({ produit, onAjouterPanier }) {
 
 // ─────────────────────────────────────────
 // PAGE ACCUEIL
-// Reçoit ajouterAuPanier en prop depuis App.jsx
+// Utilise le contexte Panier (ajouterAuPanier)
 // ─────────────────────────────────────────
-function Accueil({ ajouterAuPanier }) {
+function Accueil() {
+  const { ajouterAuPanier, totalArticles } = usePanier();
   const [produits,   setProduits]   = useState([]);
   const [chargement, setChargement] = useState(true);
   const [categorie,  setCategorie]  = useState('Tous');

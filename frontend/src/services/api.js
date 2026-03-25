@@ -4,7 +4,10 @@ const api = axios.create({
   baseURL: import.meta.env.VITE_API_URL,
 });
 
-
+// ─────────────────────────────────────────
+// INTERCEPTEUR REQUÊTE
+// Ajoute le token JWT dans le header Authorization
+// ─────────────────────────────────────────
 api.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {
@@ -14,13 +17,9 @@ api.interceptors.request.use((config) => {
 });
 
 // ─────────────────────────────────────────
-// INTERCEPTEUR DE RÉPONSE
-//
-// Après CHAQUE réponse du backend,
-// ce code s'exécute automatiquement.
-//
+// INTERCEPTEUR RÉPONSE
 // Si le backend répond 401 (non autorisé)
-// → le token est expiré ou invalide
+// → token expiré ou invalide
 // → on supprime le token du localStorage
 // → on redirige vers /compte pour reconnecter
 // ─────────────────────────────────────────
@@ -38,47 +37,54 @@ api.interceptors.response.use(
 
 // ─────────────────────────────────────────
 // FONCTIONS AUTH
-//
-// On regroupe ici tous les appels API
-// liés à l'authentification.
-// Le reste du code importe ces fonctions
-// au lieu d'écrire axios partout.
 // ─────────────────────────────────────────
-
-// Inscription — envoie les données du formulaire
-export const register = (data) =>
-  api.post('/api/auth/register', data);
-
-// Connexion — envoie email + password
-export const login = (data) =>
-  api.post('/api/auth/login', data);
-
-// Récupère le profil de l'utilisateur connecté
-export const getProfil = () =>
-  api.get('/api/auth/profil');
+export const register = (data) => api.post('/api/auth/register', data);
+export const login = (data) => api.post('/api/auth/login', data);
+export const getProfil = () => api.get('/api/auth/profil');
 
 // ─────────────────────────────────────────
 // FONCTIONS PRODUITS
 // ─────────────────────────────────────────
+export const getProduits = () => api.get('/api/produits');
+export const getProduitById = (id) => api.get(`/api/produits/${id}`);
+export const creerProduit = (data) => api.post('/api/produits', data);
+export const modifierProduit = (id, data) => api.put(`/api/produits/${id}`, data);
+export const supprimerProduit = (id) => api.delete(`/api/produits/${id}`);
 
-// Récupère tous les produits
-export const getProduits = () =>
-  api.get('/api/produits');
+// ─────────────────────────────────────────
+// FONCTIONS COMMANDES
+// ─────────────────────────────────────────
+export const creerCommande = (data) => api.post('/api/commandes', data);
+export const getCommandes = () => api.get('/api/commandes');
+export const getMesCommandes = () => api.get('/api/commandes/mes-commandes');
+export const changerStatut = (id, statut) => api.put(`/api/commandes/${id}/statut`, { statut });
 
-// Récupère un produit par ID
-export const getProduitById = (id) =>
-  api.get(`/api/produits/${id}`);
+// ─────────────────────────────────────────
+// FONCTIONS UTILISATEURS
+// ─────────────────────────────────────────
 
-// Crée un produit (admin)
-export const creerProduit = (data) =>
-  api.post('/api/produits', data);
+// Récupère tous les utilisateurs (admin)
+export const getUtilisateurs = (params = {}) => {
+  const { recherche, role } = params;
+  let url = '/api/utilisateurs';
+  const queryParams = [];
+  
+  if (recherche) queryParams.push(`recherche=${encodeURIComponent(recherche)}`);
+  if (role && role !== 'tous') queryParams.push(`role=${role}`);
+  
+  if (queryParams.length > 0) {
+    url += `?${queryParams.join('&')}`;
+  }
+  
+  return api.get(url);
+};
 
-// Modifie un produit (admin)
-export const modifierProduit = (id, data) =>
-  api.put(`/api/produits/${id}`, data);
+// Modifie un utilisateur (admin)
+export const modifierUtilisateur = (id, data) =>
+  api.put(`/api/utilisateurs/${id}`, data);
 
-// Supprime un produit (admin)
-export const supprimerProduit = (id) =>
-  api.delete(`/api/produits/${id}`);
+// Récupère les détails d'un utilisateur
+export const getUtilisateurById = (id) =>
+  api.get(`/api/utilisateurs/${id}`);
 
 export default api;

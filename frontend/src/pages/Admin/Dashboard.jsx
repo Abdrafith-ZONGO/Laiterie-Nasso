@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { getProduits } from '../../services/api';
-import { FiPackage, FiUsers, FiShoppingBag, FiTrendingUp } from 'react-icons/fi';
+import { getProduits, getCommandes, getUtilisateurs } from '../../services/api';
+import { FiPackage, FiUsers, FiShoppingBag, FiTrendingUp, FiUserPlus } from 'react-icons/fi';
 
 // ─────────────────────────────────────────
 // PALETTE
@@ -16,6 +16,7 @@ const C = {
   orClair:    '#F2C040',
   rouge:      '#E53535',
   bleu:       '#3B8BD4',
+  violet:     '#9B6BFF',
 };
 
 // ─────────────────────────────────────────
@@ -33,11 +34,10 @@ function StatCard({ titre, valeur, icon, couleur, sousTitre }) {
       gap:          '18px',
       boxShadow:    '0 4px 20px rgba(0,0,0,0.20)',
     }}>
-      {/* Icône colorée */}
       <div style={{
         width:          '52px', height: '52px',
         borderRadius:   '14px',
-        background:     `${couleur}18`, // couleur très transparente
+        background:     `${couleur}18`,
         border:         `1px solid ${couleur}35`,
         display:        'flex', alignItems: 'center', justifyContent: 'center',
         fontSize:       '22px',
@@ -46,8 +46,6 @@ function StatCard({ titre, valeur, icon, couleur, sousTitre }) {
       }}>
         {icon}
       </div>
-
-      {/* Chiffre + titre */}
       <div>
         <div style={{
           fontSize:   '28px',
@@ -75,28 +73,38 @@ function StatCard({ titre, valeur, icon, couleur, sousTitre }) {
 // DASHBOARD
 // ─────────────────────────────────────────
 function Dashboard() {
-  // ── Stats chargées depuis l'API ─────────
   const [stats, setStats] = useState({
-    produits:   0,
-    disponibles: 0,
-    rupture:    0,
+    produits:        0,
+    disponibles:     0,
+    rupture:         0,
+    commandes:       0,
+    commandesAttente: 0,
+    utilisateurs:    0,
+    admins:          0,
   });
   const [chargement, setChargement] = useState(true);
 
-  // ─────────────────────────────────────────
-  // Au chargement — récupère les produits
-  // pour calculer les statistiques
-  // ─────────────────────────────────────────
   useEffect(() => {
     const chargerStats = async () => {
       try {
-        const res = await getProduits();
-        const produits = res.data.produits;
+        const [produitsRes, commandesRes, utilisateursRes] = await Promise.all([
+          getProduits(),
+          getCommandes(),
+          getUtilisateurs(),
+        ]);
+
+        const produits = produitsRes.data.produits;
+        const commandes = commandesRes.data.commandes;
+        const utilisateurs = utilisateursRes.data.utilisateurs;
 
         setStats({
-          produits:    produits.length,
+          produits:   produits.length,
           disponibles: produits.filter(p => p.disponible).length,
-          rupture:     produits.filter(p => p.stock === 0).length,
+          rupture:    produits.filter(p => p.stock === 0).length,
+          commandes:  commandes.length,
+          commandesAttente: commandes.filter(c => c.statut === 'EN_ATTENTE').length,
+          utilisateurs: utilisateurs.length,
+          admins: utilisateurs.filter(u => u.role === 'admin').length,
         });
       } catch (err) {
         console.error('Erreur chargement stats:', err);
@@ -162,10 +170,17 @@ function Dashboard() {
         />
         <StatCard
           titre="Commandes"
-          valeur="0"
-          icon={<FiUsers />}
+          valeur={stats.commandes}
+          icon={<FiShoppingBag />}
           couleur={C.bleu}
-          sousTitre="bientôt disponible"
+          sousTitre={`dont ${stats.commandesAttente} en attente`}
+        />
+        <StatCard
+          titre="Utilisateurs"
+          valeur={stats.utilisateurs}
+          icon={<FiUsers />}
+          couleur={C.violet}
+          sousTitre={`${stats.admins} administrateur${stats.admins > 1 ? 's' : ''}`}
         />
       </div>
 
@@ -184,7 +199,6 @@ function Dashboard() {
           gap:                 '12px',
         }}>
 
-          {/* Bouton → Ajouter un produit */}
           <a href="/admin/produits" style={{
             display:        'flex',
             alignItems:     'center',
@@ -203,7 +217,6 @@ function Dashboard() {
             Gérer les produits
           </a>
 
-          {/* Bouton → Voir les commandes */}
           <a href="/admin/commandes" style={{
             display:        'flex',
             alignItems:     'center',
@@ -220,6 +233,24 @@ function Dashboard() {
           }}>
             <FiShoppingBag style={{ color: C.orClair, fontSize: '18px' }} />
             Voir les commandes
+          </a>
+
+          <a href="/admin/utilisateurs" style={{
+            display:        'flex',
+            alignItems:     'center',
+            gap:            '12px',
+            padding:        '16px 20px',
+            borderRadius:   '12px',
+            background:     'rgba(155,107,255,0.08)',
+            border:         '1px solid rgba(155,107,255,0.25)',
+            textDecoration: 'none',
+            color:          '#e8f5d0',
+            fontSize:       '13.5px',
+            fontWeight:     '500',
+            transition:     'all 0.2s ease',
+          }}>
+            <FiUserPlus style={{ color: C.violet, fontSize: '18px' }} />
+            Gérer les utilisateurs
           </a>
 
         </div>

@@ -3,7 +3,7 @@ import { Link, useLocation, useNavigate, Outlet } from 'react-router-dom';
 import { useAuth } from '../../context/AuthContext';
 import {
   FiGrid, FiPackage, FiShoppingBag,
-  FiUsers, FiLogOut, FiMenu, FiX
+  FiUsers, FiLogOut, FiMenu, FiX, FiArrowLeft
 } from 'react-icons/fi';
 import { useState } from 'react';
 
@@ -32,7 +32,7 @@ const MENU_LINKS = [
   { to: '/admin',          label: 'Dashboard',  icon: <FiGrid />     },
   { to: '/admin/produits', label: 'Produits',   icon: <FiPackage />  },
   { to: '/admin/commandes',label: 'Commandes',  icon: <FiShoppingBag /> },
-  { to: '/admin/users',    label: 'Utilisateurs', icon: <FiUsers />  },
+  { to: '/admin/utilisateurs',    label: 'Utilisateurs', icon: <FiUsers />  },
 ];
 
 // ─────────────────────────────────────────
@@ -54,9 +54,6 @@ function MenuLink({ to, label, icon, active }) {
         textDecoration: 'none',
         fontSize:       '13.5px',
         fontWeight:     active ? '600' : '400',
-        // Actif  : fond vert + texte blanc
-        // Hover  : fond légèrement vert
-        // Repos  : transparent
         color:          active ? C.blanc : hov ? C.texte : C.texteClair,
         background:     active
           ? `linear-gradient(135deg, ${C.vert}, ${C.vertClair})`
@@ -65,13 +62,11 @@ function MenuLink({ to, label, icon, active }) {
           ? '0 4px 14px rgba(90,191,42,0.35)'
           : 'none',
         transition:     'all 0.2s ease',
-        // Barre dorée à gauche sur lien actif
         borderLeft:     active
           ? `3px solid ${C.or}`
           : '3px solid transparent',
       }}
     >
-      {/* Icône */}
       <span style={{ fontSize: '16px', flexShrink: 0 }}>
         {icon}
       </span>
@@ -82,11 +77,6 @@ function MenuLink({ to, label, icon, active }) {
 
 // ─────────────────────────────────────────
 // LAYOUT ADMIN
-// Structure :
-// ┌──────────┬──────────────────────────┐
-// │ Sidebar  │  Contenu (Outlet)        │
-// │ (menu)   │                          │
-// └──────────┴──────────────────────────┘
 // ─────────────────────────────────────────
 function AdminLayout() {
   const location             = useLocation();
@@ -94,11 +84,6 @@ function AdminLayout() {
   const { user, deconnecter, estAdmin } = useAuth();
   const [sidebarOpen, setSidebar] = useState(false);
 
-  // ─────────────────────────────────────────
-  // Protection de la route admin
-  // Si l'utilisateur n'est pas admin
-  // on le redirige vers l'accueil
-  // ─────────────────────────────────────────
   if (!estAdmin) {
     navigate('/');
     return null;
@@ -118,10 +103,7 @@ function AdminLayout() {
       fontFamily: 'system-ui, sans-serif',
     }}>
 
-      {/* ════════════════════════════════════
-          SIDEBAR — menu latéral
-          Fixe sur desktop, drawer sur mobile
-      ════════════════════════════════════ */}
+      {/* SIDEBAR — menu latéral */}
       <aside style={{
         width:          '240px',
         flexShrink:     0,
@@ -133,8 +115,6 @@ function AdminLayout() {
         top:            0,
         height:         '100vh',
         overflowY:      'auto',
-        // Sur mobile : caché par défaut
-        // (géré via className ci-dessous)
       }}
         className="hidden lg:flex"
       >
@@ -165,7 +145,6 @@ function AdminLayout() {
             </div>
           </div>
 
-          {/* Info utilisateur connecté */}
           <div style={{
             marginTop:    '14px',
             padding:      '10px 12px',
@@ -226,14 +205,10 @@ function AdminLayout() {
         </div>
       </aside>
 
-      {/* ════════════════════════════════════
-          CONTENU PRINCIPAL
-          Outlet = la page active
-          (Dashboard, Produits, etc.)
-      ════════════════════════════════════ */}
+      {/* CONTENU PRINCIPAL */}
       <main style={{ flex: 1, overflowX: 'hidden' }}>
 
-        {/* Barre du haut */}
+        {/* Barre du haut avec bouton retour */}
         <div style={{
           padding:        '0 28px',
           height:         '64px',
@@ -252,29 +227,47 @@ function AdminLayout() {
             color:      C.texte,
             margin:     0,
           }}>
-            {/* Titre dynamique selon la page */}
             {location.pathname === '/admin'            && 'Dashboard'}
             {location.pathname === '/admin/produits'   && 'Gestion des produits'}
             {location.pathname === '/admin/commandes'  && 'Gestion des commandes'}
-            {location.pathname === '/admin/users'      && 'Utilisateurs'}
+            {location.pathname === '/admin/utilisateurs'      && 'Utilisateurs'}
           </h1>
 
-          {/* Lien retour au site */}
-          <Link to="/" style={{
-            fontSize:       '12.5px',
-            color:          C.texteClair,
-            textDecoration: 'none',
-            padding:        '6px 12px',
-            borderRadius:   '8px',
-            border:         `1px solid ${C.bordure}`,
-            transition:     'all 0.2s',
-          }}>
-            ← Retour au site
+          {/* BOUTON RETOUR AU SITE — mêmes couleurs que dans le dashboard */}
+          <Link
+            to="/"
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              gap: '8px',
+              padding: '8px 18px',
+              borderRadius: '10px',
+              background: 'linear-gradient(135deg, #90D840, #5ABF2A)',
+              color: '#1e2e1e',
+              fontSize: '12.5px',
+              fontWeight: '600',
+              textDecoration: 'none',
+              border: '1px solid rgba(90,191,42,0.5)',
+              boxShadow: '0 2px 8px rgba(90,191,42,0.25)',
+              transition: 'all 0.2s ease',
+            }}
+            onMouseEnter={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #5ABF2A, #3A7A1E)';
+              e.currentTarget.style.transform = 'translateY(-2px)';
+              e.currentTarget.style.boxShadow = '0 4px 12px rgba(90,191,42,0.35)';
+            }}
+            onMouseLeave={(e) => {
+              e.currentTarget.style.background = 'linear-gradient(135deg, #90D840, #5ABF2A)';
+              e.currentTarget.style.transform = 'translateY(0)';
+              e.currentTarget.style.boxShadow = '0 2px 8px rgba(90,191,42,0.25)';
+            }}
+          >
+            <FiArrowLeft style={{ fontSize: '14px' }} />
+            Retour au site
           </Link>
         </div>
 
-        {/* Zone de contenu — Outlet affiche
-            la page correspondant à la route */}
+        {/* Zone de contenu — Outlet affiche la page correspondant à la route */}
         <div style={{ padding: '28px' }}>
           <Outlet />
         </div>

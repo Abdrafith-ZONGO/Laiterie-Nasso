@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser, FiLogOut } from 'react-icons/fi';
+import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 
 const C = {
@@ -130,7 +130,7 @@ function Header({ totalArticles = 0 }) {
   const location = useLocation();
   const [menuOpen, setMenu]   = useState(false);
   const [states,   setStates] = useState({
-    cart: false, compte: false, logo: false, search: false,
+    cart: false, compte: false, logo: false, search: false, admin: false,
   });
 
   const { user, deconnecter, estConnecte } = useAuth();
@@ -306,6 +306,30 @@ function Header({ totalArticles = 0 }) {
                 </Link>
               )}
 
+              {/* BOUTON ADMIN — visible seulement pour les admins */}
+              {user?.role === 'admin' && (
+                <Link
+                  to="/admin"
+                  onMouseEnter={() => toggle('admin', true)}
+                  onMouseLeave={() => toggle('admin', false)}
+                  className="hidden lg:flex"
+                  style={{
+                    alignItems: 'center', gap: '6px',
+                    padding: '8px 14px', borderRadius: '10px',
+                    border: `1.5px solid ${states.admin ? 'rgba(90,191,42,0.50)' : C.bordure}`,
+                    background: states.admin ? 'rgba(90,191,42,0.09)' : C.blanc,
+                    color: C.texte, fontSize: '12.5px', fontWeight: '500',
+                    textDecoration: 'none', whiteSpace: 'nowrap',
+                    boxShadow: states.admin ? '0 4px 14px rgba(80,180,40,0.20)' : '0 2px 6px rgba(80,180,40,0.10)',
+                    transform: states.admin ? 'translateY(-1px)' : 'translateY(0)',
+                    transition: 'all 0.2s ease-out',
+                  }}
+                >
+                  <FiSettings style={{ fontSize: '14px', color: C.vert }} />
+                  Admin
+                </Link>
+              )}
+
               {/* PANIER avec badge dynamique */}
               <Link
                 to="/panier"
@@ -333,7 +357,7 @@ function Header({ totalArticles = 0 }) {
                 {/* Badge rouge — visible seulement si totalArticles > 0 */}
                 {totalArticles > 0 && (
                   <span
-                    key={totalArticles} // ← key change = animation pop à chaque ajout
+                    key={totalArticles}
                     style={{
                       position:    'absolute', top: '-7px', right: '-7px',
                       minWidth:    '18px', height: '18px',
