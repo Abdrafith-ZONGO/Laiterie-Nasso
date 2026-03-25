@@ -8,6 +8,7 @@ import Produits from './pages/Produits';
 import Histoire from './pages/Histoire';
 import Contact from './pages/Contact';
 import Compte from './pages/Compte';
+import Profil from './pages/Profil';
 import Panier from './pages/Panier';
 import MesCommandes from './pages/MesCommandes';
 import AdminLayout from './pages/Admin/index';
@@ -88,6 +89,12 @@ function App() {
             <Panier />
           </LayoutPublic>
         } />
+
+        <Route path="/profil" element={
+  <LayoutPublic>
+    <Profil />
+  </LayoutPublic>
+} />
 
         <Route path="/mes-commandes" element={
           <LayoutPublic>

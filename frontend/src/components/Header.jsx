@@ -1,5 +1,5 @@
-import React, { useState } from 'react';
-import { Link, useLocation } from 'react-router-dom';
+import React, { useState, useEffect } from 'react';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 
@@ -128,15 +128,24 @@ function DrawerLink({ to, label, active, onClick }) {
 // ─────────────────────────────────────────
 function Header({ totalArticles = 0 }) {
   const location = useLocation();
+  const navigate = useNavigate();
   const [menuOpen, setMenu]   = useState(false);
   const [states,   setStates] = useState({
     cart: false, compte: false, logo: false, search: false, admin: false,
   });
 
+  const [recherche, setRecherche] = useState('');
   const { user, deconnecter, estConnecte } = useAuth();
 
   const toggle    = (key, val) => setStates(prev => ({ ...prev, [key]: val }));
   const closeMenu = () => setMenu(false);
+
+  // Redirige dès que la recherche change (sans appuyer sur Entrée)
+  useEffect(() => {
+    if (recherche.trim()) {
+      navigate(`/produits?q=${encodeURIComponent(recherche)}`);
+    }
+  }, [recherche, navigate]);
 
   const handleDeconnexion = () => {
     deconnecter();
@@ -213,7 +222,7 @@ function Header({ totalArticles = 0 }) {
 
             <div style={{ flex: 1 }} />
 
-            {/* RECHERCHE */}
+            {/* RECHERCHE DESKTOP */}
             <div className="hidden md:block" style={{ width: '290px', flexShrink: 0 }}>
               <div style={{ position: 'relative' }}>
                 <FiSearch style={{
@@ -223,6 +232,8 @@ function Header({ totalArticles = 0 }) {
                 }} />
                 <input
                   type="text"
+                  value={recherche}
+                  onChange={(e) => setRecherche(e.target.value)}
                   placeholder="Rechercher un produit..."
                   onFocus={() => toggle('search', true)}
                   onBlur={()  => toggle('search', false)}
@@ -423,6 +434,7 @@ function Header({ totalArticles = 0 }) {
           background: `linear-gradient(90deg, ${C.vert}, ${C.vertClair}, ${C.or}, ${C.vertClair}, ${C.vert})`,
         }} />
 
+        {/* RECHERCHE MOBILE */}
         <div style={{ padding: '14px 16px 12px', borderBottom: `1px solid ${C.bordure}` }}>
           <div style={{ position: 'relative' }}>
             <FiSearch style={{
@@ -430,7 +442,11 @@ function Header({ totalArticles = 0 }) {
               transform: 'translateY(-50%)', color: C.vert,
               fontSize: '14px', pointerEvents: 'none',
             }} />
-            <input type="text" placeholder="Rechercher..."
+            <input
+              type="text"
+              value={recherche}
+              onChange={(e) => setRecherche(e.target.value)}
+              placeholder="Rechercher..."
               style={{
                 width: '100%', background: '#F8FDF2',
                 border: `1.5px solid ${C.bordure}`, borderRadius: '999px',
