@@ -30,7 +30,7 @@ const C = {
 const NAV_LINKS = [
   { to: '/',         label: 'Accueil'  },
   { to: '/produits', label: 'Produits' },
-  { to: '/histoire', label: 'Histoire' },
+  { to: '/apropos', label: 'À propos' },
   { to: '/contact',  label: 'Contact'  },
 ];
 

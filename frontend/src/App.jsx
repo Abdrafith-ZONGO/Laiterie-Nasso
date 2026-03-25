@@ -5,7 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import Accueil from './pages/Accueil';
 import Produits from './pages/Produits';
-import Histoire from './pages/Histoire';
+import Histoire from './pages/Apropos';
 import Contact from './pages/Contact';
 import Compte from './pages/Compte';
 import Profil from './pages/Profil';
@@ -66,7 +66,7 @@ function App() {
           </LayoutPublic>
         } />
 
-        <Route path="/histoire" element={
+        <Route path="/apropos" element={
           <LayoutPublic>
             <Histoire />
           </LayoutPublic>

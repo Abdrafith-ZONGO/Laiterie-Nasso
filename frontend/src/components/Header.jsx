@@ -1,6 +1,9 @@
 import React, { useState, useEffect } from 'react';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
-import { FiShoppingCart, FiSearch, FiMenu, FiX, FiUser, FiLogOut, FiSettings } from 'react-icons/fi';
+import { 
+  FiShoppingCart, FiSearch, FiMenu, FiX, FiUser, FiLogOut, FiSettings,
+  FiHome, FiGrid, FiInfo, FiMail
+} from 'react-icons/fi';
 import { useAuth } from '../context/AuthContext';
 
 const C = {
@@ -20,10 +23,10 @@ const C = {
 };
 
 const NAV_LINKS = [
-  { to: '/',         label: 'Accueil'  },
-  { to: '/produits', label: 'Produits' },
-  { to: '/histoire', label: 'Histoire' },
-  { to: '/contact',  label: 'Contact'  },
+  { to: '/',         label: 'Accueil',   icon: <FiHome />   },
+  { to: '/produits', label: 'Produits',  icon: <FiGrid />   },
+  { to: '/apropos',  label: 'À propos',  icon: <FiInfo />   },
+  { to: '/contact',  label: 'Contact',   icon: <FiMail />   },
 ];
 
 const useHover = (base, hover) => {
@@ -94,18 +97,22 @@ function IconBtn({ onClick, children, ariaLabel }) {
   );
 }
 
-function DrawerLink({ to, label, active, onClick }) {
+function DrawerLink({ to, label, icon, active, onClick }) {
   const [hov, setHov] = useState(false);
   return (
     <Link
-      to={to} onClick={onClick}
+      to={to}
+      onClick={onClick}
       onMouseEnter={() => setHov(true)}
       onMouseLeave={() => setHov(false)}
       style={{
-        display: 'flex', alignItems: 'center', justifyContent: 'space-between',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'space-between',
         padding: '13px 20px',
         paddingLeft: active ? '17px' : hov ? '24px' : '20px',
-        fontSize: '14px', fontWeight: active ? '600' : '500',
+        fontSize: '14px',
+        fontWeight: active ? '600' : '500',
         color: active || hov ? C.vertFonce : C.texte,
         textDecoration: 'none',
         background: active ? 'rgba(90,191,42,0.10)' : hov ? 'rgba(90,191,42,0.06)' : 'transparent',
@@ -114,10 +121,21 @@ function DrawerLink({ to, label, active, onClick }) {
         transition: 'all 0.18s ease',
       }}
     >
-      {label}
+      <div style={{ display: 'flex', alignItems: 'center', gap: '12px' }}>
+        <span style={{
+          fontSize: '16px',
+          color: active || hov ? C.or : C.bordure,
+        }}>
+          {icon}
+        </span>
+        {label}
+      </div>
       <span style={{
         color: active || hov ? C.or : C.bordure,
-        fontSize: '18px', fontWeight: '700', transition: 'color 0.18s', lineHeight: 1,
+        fontSize: '18px',
+        fontWeight: '700',
+        transition: 'color 0.18s',
+        lineHeight: 1,
       }}>›</span>
     </Link>
   );
@@ -457,10 +475,17 @@ function Header({ totalArticles = 0 }) {
           </div>
         </div>
 
+        {/* LIENS DE NAVIGATION AVEC ICÔNES */}
         <div>
-          {NAV_LINKS.map(({ to, label }) => (
-            <DrawerLink key={to} to={to} label={label}
-              active={location.pathname === to} onClick={closeMenu} />
+          {NAV_LINKS.map(({ to, label, icon }) => (
+            <DrawerLink
+              key={to}
+              to={to}
+              label={label}
+              icon={icon}
+              active={location.pathname === to}
+              onClick={closeMenu}
+            />
           ))}
         </div>
 

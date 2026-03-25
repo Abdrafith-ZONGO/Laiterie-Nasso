@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import { FiMapPin, FiClock, FiHeart, FiAward } from 'react-icons/fi';
+import { FiHeart, FiAward, FiUsers, FiCoffee, FiMapPin, FiClock } from 'react-icons/fi';
 
 // ─────────────────────────────────────────
 // PALETTE
@@ -26,39 +26,38 @@ const C = {
 function ValeurCard({ icon, titre, description }) {
   return (
     <div style={{
-      background:   C.blanc,
+      background: C.blanc,
       borderRadius: '16px',
-      border:       `1px solid ${C.bordure}`,
-      padding:      '28px 20px',
-      textAlign:    'center',
-      transition:   'all 0.25s ease',
-      boxShadow:    '0 2px 12px rgba(30,90,8,0.06)',
+      border: `1px solid ${C.bordure}`,
+      padding: '28px 20px',
+      textAlign: 'center',
+      transition: 'all 0.25s ease',
     }}>
       <div style={{
-        width:          '60px',
-        height:         '60px',
-        margin:         '0 auto 20px',
-        borderRadius:   '50%',
-        background:     `linear-gradient(135deg, ${C.vert}, ${C.vertClair})`,
-        display:        'flex',
-        alignItems:     'center',
+        width: '60px',
+        height: '60px',
+        margin: '0 auto 20px',
+        borderRadius: '50%',
+        background: `linear-gradient(135deg, ${C.vert}, ${C.vertClair})`,
+        display: 'flex',
+        alignItems: 'center',
         justifyContent: 'center',
-        color:          '#fff',
-        fontSize:       '28px',
+        color: '#fff',
+        fontSize: '28px',
       }}>
         {icon}
       </div>
       <h3 style={{
-        fontSize:     '18px',
-        fontWeight:   '700',
-        color:        C.texte,
+        fontSize: '18px',
+        fontWeight: '700',
+        color: C.texte,
         marginBottom: '10px',
       }}>
         {titre}
       </h3>
       <p style={{
-        fontSize:   '13.5px',
-        color:      C.texteClair,
+        fontSize: '13.5px',
+        color: C.texteClair,
         lineHeight: 1.6,
       }}>
         {description}
@@ -68,9 +67,9 @@ function ValeurCard({ icon, titre, description }) {
 }
 
 // ─────────────────────────────────────────
-// PAGE HISTOIRE
+// PAGE À PROPOS
 // ─────────────────────────────────────────
-function Histoire() {
+function Apropos() {
   return (
     <div style={{ background: C.fond, minHeight: '100vh' }}>
 
@@ -84,7 +83,7 @@ function Histoire() {
       }}>
         <img
           src="/images/hero-nasoo.png"
-          alt="La ferme Laiterie Nasoo"
+          alt="Laiterie Nasoo"
           style={{
             position: 'absolute',
             inset: 0,
@@ -114,7 +113,7 @@ function Histoire() {
             marginBottom: '16px',
             fontFamily: 'Georgia, serif',
           }}>
-            Notre histoire
+            À propos de nous
           </h1>
           <p style={{
             fontSize: '18px',
@@ -123,12 +122,12 @@ function Histoire() {
             maxWidth: '600px',
             margin: '0 auto',
           }}>
-            Depuis 1990, une histoire de passion, de tradition et de qualité
+            Découvrez qui nous sommes et ce qui nous anime
           </p>
         </div>
       </section>
 
-      {/* ── NOTRE HISTOIRE ─────────────────────────────── */}
+      {/* ── QUI SOMMES-NOUS ? ─────────────────────────── */}
       <section style={{ padding: '80px 24px' }}>
         <div style={{ maxWidth: '1000px', margin: '0 auto' }}>
           <div style={{
@@ -145,7 +144,7 @@ function Histoire() {
                 marginBottom: '20px',
                 fontFamily: 'Georgia, serif',
               }}>
-                Une tradition familiale
+                Qui sommes-nous ?
               </h2>
               <p style={{
                 fontSize: '15px',
@@ -153,11 +152,10 @@ function Histoire() {
                 lineHeight: 1.8,
                 marginBottom: '20px',
               }}>
-                L'aventure de Laiterie Nasoo commence en 1990, quand Mamadou Nasoo,
-                éleveur passionné, décide de transformer le lait de ses vaches en
-                fromages et yaourts de qualité. Ce qui n'était au départ qu'une
-                petite production familiale est devenu, au fil des années, une
-                véritable institution à Ouagadougou.
+                Laiterie Nasoo est une entreprise familiale basée à Ouagadougou,
+                spécialisée dans la production de produits laitiers frais et de
+                fast-food de qualité. Depuis notre création, nous mettons un point
+                d'honneur à offrir des produits sains, savoureux et accessibles à tous.
               </p>
               <p style={{
                 fontSize: '15px',
@@ -165,26 +163,24 @@ function Histoire() {
                 lineHeight: 1.8,
                 marginBottom: '20px',
               }}>
-                Aujourd'hui, c'est la troisième génération qui perpétue ce savoir-faire,
-                en alliant traditions ancestrales et techniques modernes. Nos vaches
-                continuent de paître dans les pâturages de la région, garantissant
-                un lait d'une qualité exceptionnelle.
+                Notre nom "Nasoo" est un hommage à nos racines et à notre engagement
+                envers la communauté locale. Nous travaillons avec des producteurs
+                locaux pour garantir la fraîcheur et la qualité de nos produits.
               </p>
               <p style={{
                 fontSize: '15px',
                 color: C.texteClair,
                 lineHeight: 1.8,
               }}>
-                En 2020, nous avons élargi notre offre avec un espace fast-food,
-                pour faire découvrir nos produits sous une forme nouvelle et
-                savoureuse. Un pari réussi qui nous permet aujourd'hui de partager
-                notre passion avec encore plus de clients.
+                Aujourd'hui, nous sommes fiers de servir notre clientèle avec passion
+                et dévouement, en proposant une gamme variée de produits qui allient
+                tradition et modernité.
               </p>
             </div>
             <div>
               <img
                 src="/images/ferme_nasoo.jpg"
-                alt="La ferme Nasoo"
+                alt="L'équipe de Laiterie Nasoo"
                 style={{
                   width: '100%',
                   borderRadius: '20px',
@@ -205,8 +201,8 @@ function Histoire() {
                   border: `1px solid ${C.bordure}`,
                   flex: 1,
                 }}>
-                  <span style={{ fontSize: '28px', fontWeight: '800', color: C.or }}>1990</span>
-                  <p style={{ fontSize: '12px', color: C.texteClair, margin: 0 }}>Année de création</p>
+                  <span style={{ fontSize: '28px', fontWeight: '800', color: C.or }}>+30</span>
+                  <p style={{ fontSize: '12px', color: C.texteClair, margin: 0 }}>Ans d'expérience</p>
                 </div>
                 <div style={{
                   textAlign: 'center',
@@ -216,8 +212,19 @@ function Histoire() {
                   border: `1px solid ${C.bordure}`,
                   flex: 1,
                 }}>
-                  <span style={{ fontSize: '28px', fontWeight: '800', color: C.or }}>3</span>
-                  <p style={{ fontSize: '12px', color: C.texteClair, margin: 0 }}>Générations</p>
+                  <span style={{ fontSize: '28px', fontWeight: '800', color: C.or }}>100%</span>
+                  <p style={{ fontSize: '12px', color: C.texteClair, margin: 0 }}>Local</p>
+                </div>
+                <div style={{
+                  textAlign: 'center',
+                  padding: '12px',
+                  background: C.blanc,
+                  borderRadius: '12px',
+                  border: `1px solid ${C.bordure}`,
+                  flex: 1,
+                }}>
+                  <span style={{ fontSize: '28px', fontWeight: '800', color: C.or }}>24/7</span>
+                  <p style={{ fontSize: '12px', color: C.texteClair, margin: 0 }}>Service client</p>
                 </div>
               </div>
             </div>
@@ -239,7 +246,7 @@ function Histoire() {
               Nos valeurs
             </h2>
             <p style={{ fontSize: '15px', color: C.texteClair, maxWidth: '600px', margin: '0 auto' }}>
-              Ce qui nous guide chaque jour depuis plus de 30 ans
+              Ce qui nous guide chaque jour
             </p>
           </div>
 
@@ -251,23 +258,87 @@ function Histoire() {
             <ValeurCard
               icon={<FiHeart />}
               titre="Passion"
-              description="La passion du métier se transmet de génération en génération. Chaque produit est fait avec amour."
+              description="La passion du métier nous anime. Chaque produit est fait avec amour et dévouement."
             />
             <ValeurCard
               icon={<FiAward />}
               titre="Qualité"
-              description="Du pré à votre table, nous surveillons chaque étape pour vous offrir le meilleur."
+              description="Des ingrédients frais, sélectionnés avec soin. Du pré à votre table, la qualité est notre priorité."
             />
             <ValeurCard
-              icon={<FiMapPin />}
-              titre="Terroir"
-              description="Fiers de nos racines burkinabè, nous valorisons les produits locaux et les savoir-faire traditionnels."
+              icon={<FiUsers />}
+              titre="Proximité"
+              description="À l'écoute de nos clients, nous nous engageons à offrir un service chaleureux et personnalisé."
             />
             <ValeurCard
-              icon={<FiClock />}
+              icon={<FiCoffee />}
               titre="Authenticité"
-              description="Des recettes traditionnelles respectées, pour des saveurs authentiques et inoubliables."
+              description="Des recettes traditionnelles respectées, pour des saveurs authentiques qui rappellent le bon goût d'antan."
             />
+          </div>
+        </div>
+      </section>
+
+      {/* ── NOTRE ENGAGEMENT ──────────────────────────── */}
+      <section style={{ padding: '60px 24px' }}>
+        <div style={{ maxWidth: '900px', margin: '0 auto', textAlign: 'center' }}>
+          <h2 style={{
+            fontSize: '28px',
+            fontWeight: '800',
+            color: C.texte,
+            marginBottom: '24px',
+            fontFamily: 'Georgia, serif',
+          }}>
+            Notre engagement
+          </h2>
+          <div style={{
+            display: 'grid',
+            gridTemplateColumns: 'repeat(auto-fit, minmax(280px, 1fr))',
+            gap: '24px',
+            marginTop: '32px',
+          }}>
+            <div style={{
+              background: C.blanc,
+              borderRadius: '16px',
+              border: `1px solid ${C.bordure}`,
+              padding: '24px',
+            }}>
+              <FiMapPin style={{ fontSize: '32px', color: C.vert, marginBottom: '16px' }} />
+              <h3 style={{ fontSize: '18px', fontWeight: '700', color: C.texte, marginBottom: '8px' }}>
+                Produits locaux
+              </h3>
+              <p style={{ fontSize: '13px', color: C.texteClair }}>
+                Nous travaillons avec des producteurs locaux pour soutenir l'économie de notre région.
+              </p>
+            </div>
+            <div style={{
+              background: C.blanc,
+              borderRadius: '16px',
+              border: `1px solid ${C.bordure}`,
+              padding: '24px',
+            }}>
+              <FiClock style={{ fontSize: '32px', color: C.vert, marginBottom: '16px' }} />
+              <h3 style={{ fontSize: '18px', fontWeight: '700', color: C.texte, marginBottom: '8px' }}>
+                Fraîcheur garantie
+              </h3>
+              <p style={{ fontSize: '13px', color: C.texteClair }}>
+                Nos produits sont préparés quotidiennement pour vous offrir le meilleur de la fraîcheur.
+              </p>
+            </div>
+            <div style={{
+              background: C.blanc,
+              borderRadius: '16px',
+              border: `1px solid ${C.bordure}`,
+              padding: '24px',
+            }}>
+              <FiHeart style={{ fontSize: '32px', color: C.vert, marginBottom: '16px' }} />
+              <h3 style={{ fontSize: '18px', fontWeight: '700', color: C.texte, marginBottom: '8px' }}>
+                Service client
+              </h3>
+              <p style={{ fontSize: '13px', color: C.texteClair }}>
+                Une équipe à votre écoute pour répondre à toutes vos questions et suggestions.
+              </p>
+            </div>
           </div>
         </div>
       </section>
@@ -338,4 +409,4 @@ function Histoire() {
   );
 }
 
-export default Histoire;
+export default Apropos;
