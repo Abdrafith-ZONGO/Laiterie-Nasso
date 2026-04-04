@@ -210,7 +210,7 @@ function AdminCommandes() {
                     onClick={() => ouvrirWhatsApp(c)}
                     style={{
                       display: 'flex', alignItems: 'center', gap: '5px',
-                      padding: '7px 14px', borderRadius: '8px', border: 'none',
+                      padding: '7px 14px', borderRadius: '8px',
                       background: 'rgba(37,211,102,0.15)',
                       color: '#25d366', fontSize: '12px', fontWeight: '700',
                       cursor: 'pointer', border: '1px solid rgba(37,211,102,0.30)',
@@ -260,7 +260,7 @@ function AdminCommandes() {
                     onClick={() => handleStatut(c.id, s)}
                     disabled={c.statut === s}
                     style={{
-                      padding: '6px 14px', borderRadius: '8px', border: 'none',
+                      padding: '6px 14px', borderRadius: '8px',
                       background: c.statut === s
                         ? STATUTS[s].bg
                         : 'rgba(255,255,255,0.06)',

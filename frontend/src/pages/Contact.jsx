@@ -91,13 +91,12 @@ function InfoCard({ icon, title, content, link, linkText }) {
 // ─────────────────────────────────────────
 function Contact() {
   // Coordonnées
-  const tel = '70123456';
-  const telFormatted = '70 12 34 56';
-  const email = 'contact@laiterienasoo.bf';
+  const tel = '22605676767';
+  const telFormatted = '+226 05 67 67 67';
+  const email = 'nasoofarmarket@gmail.com';
   const whatsappMessage = encodeURIComponent('Bonjour Laiterie Nasoo, j\'ai une question concernant vos produits.');
   
-  // Google Maps (à remplacer par ta vraie adresse)
-  const mapsUrl = 'https://maps.google.com/?q=Ouagadougou+Secteur+15+Burkina+Faso';
+  const mapsUrl = 'https://maps.app.goo.gl/Bzco7r45tCnGoenG7?g_st=iwb';
 
   return (
     <div style={{ background: C.fond, minHeight: '100vh' }}>
@@ -154,13 +153,13 @@ function Contact() {
             icon={<FiMessageCircle />}
             title="WhatsApp"
             content="Réponse rapide"
-            link={`https://wa.me/226${tel}?text=${whatsappMessage}`}
+            link={`https://wa.me/22605676767?text=Bonjour`}
             linkText="Envoyer un message"
           />
           <InfoCard
             icon={<FiClock />}
             title="Horaires"
-            content="Mardi - Samedi : 8h-12h30 / 15h30-19h"
+            content="Lundi - Dimanche : 07h - 22h30"
           />
         </div>
       </section>
@@ -203,8 +202,8 @@ function Contact() {
               lineHeight: 1.6,
               marginBottom: '24px',
             }}>
-              Ouagadougou, Secteur 15<br />
-              Rue des Producteurs<br />
+              Ouagadougou, Dassasgo<br />
+              Face à l'ENAREF<br />
               Burkina Faso
             </p>
             <a
@@ -228,7 +227,7 @@ function Contact() {
             </a>
           </div>
 
-          {/* Carte (iframe Google Maps) */}
+          {/* Carte (iframe Google Maps) - Version corrigée */}
           <div style={{
             background: C.blanc,
             borderRadius: '16px',
@@ -281,7 +280,7 @@ function Contact() {
             flexWrap: 'wrap',
           }}>
             <a
-              href="https://facebook.com/laiterienasoo"
+              href="https://www.facebook.com/share/1CUvzHoixM/?mibextid=wwXIfr"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -300,45 +299,7 @@ function Contact() {
               <FiFacebook />
             </a>
             <a
-              href="https://instagram.com/laiterienasoo"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                background: '#E4405F',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                fontSize: '24px',
-                transition: 'transform 0.2s',
-              }}
-            >
-              <FiInstagram />
-            </a>
-            <a
-              href="https://twitter.com/laiterienasoo"
-              target="_blank"
-              rel="noopener noreferrer"
-              style={{
-                width: '48px',
-                height: '48px',
-                borderRadius: '50%',
-                background: '#1DA1F2',
-                display: 'flex',
-                alignItems: 'center',
-                justifyContent: 'center',
-                color: '#fff',
-                fontSize: '24px',
-                transition: 'transform 0.2s',
-              }}
-            >
-              <FiTwitter />
-            </a>
-            <a
-              href="https://tiktok.com/@laiterienasoo"
+              href="https://www.tiktok.com/@nasoo.farm.market?_r=1&_t=ZS-95ElSr3Co2W"
               target="_blank"
               rel="noopener noreferrer"
               style={{
@@ -357,7 +318,7 @@ function Contact() {
               <FaTiktok />
             </a>
             <a
-              href={`https://wa.me/226${tel}?text=${whatsappMessage}`}
+              href={`https://wa.me/${tel}?text=${whatsappMessage}`}
               target="_blank"
               rel="noopener noreferrer"
               style={{

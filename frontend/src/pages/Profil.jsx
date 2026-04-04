@@ -205,14 +205,18 @@ function Profil() {
   const [modalMdp, setModalMdp] = useState(false);
   const [message, setMessage] = useState('');
 
+  console.log('🔄 Composant rendu - edition:', edition, 'form:', form);
+
   // Charger le profil
   useEffect(() => {
+      console.log('🔄 useEffect chargement profil - estConnecte:', estConnecte)
     if (!estConnecte) {
       navigate('/compte');
       return;
     }
 
     const chargerProfil = async () => {
+      console.log('🔄 Chargement du profil...');
       try {
         const res = await getProfil();
         setProfil(res.data.user);
@@ -237,6 +241,8 @@ function Profil() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    const confirmation = window.confirm('Voulez-vous vraiment enregistrer les modifications ?');
+    if (!confirmation) return;
     try {
       await modifierUtilisateur(user.id, form);
       setProfil({ ...profil, ...form });

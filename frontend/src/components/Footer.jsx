@@ -35,18 +35,18 @@ const NAV_LINKS = [
 ];
 
 const SOCIAL_LINKS = [
-  { href: '#', icon: <FaFacebookF />, label: 'Facebook'  },
-  { href: '#', icon: <FaInstagram />, label: 'Instagram' },
-  { href: '#', icon: <FaXTwitter />,  label: 'X'         },
-  { href: '#', icon: <FaTiktok />,    label: 'TikTok'    },
-  { href: '#', icon: <FaWhatsapp />,  label: 'WhatsApp'  },
+  { href: 'https://www.facebook.com/share/1CUvzHoixM/?mibextid=wwXIfr', icon: <FaFacebookF />, label: 'Facebook'  },
+  // { href: '#', icon: <FaInstagram />, label: 'Instagram' },
+  // { href: '#', icon: <FaXTwitter />,  label: 'X'         },
+  { href: 'https://www.tiktok.com/@nasoo.farm.market?_r=1&_t=ZS-95ElSr3Co2W', icon: <FaTiktok />,    label: 'TikTok'    },
+  { href: 'https://wa.me/22605676767?text=Bonjour', icon: <FaWhatsapp />,  label: 'WhatsApp'  },
 ];
 
 const CONTACT_ITEMS = [
-  { icon: <FaMapMarkerAlt />, text: "Ouagadougou, Dassasgo\nface à l'ENAM", multiline: true },
-  { icon: <FaPhoneAlt />,    text: '70 12 34 56 / 71 23 45 67' },
-  { icon: <FaEnvelope />,    text: 'contact@laiterienasoo.bf'   },
-  { icon: <FaClock />,       text: 'Mar–Sam : 7h – 22h30'      },
+  { icon: <FaMapMarkerAlt />, text: "Ouagadougou, Dassasgo\nface à l'ENAREF", multiline: true },
+  { icon: <FaPhoneAlt />,    text: '+226 05 67 67 67' },
+  { icon: <FaEnvelope />,    text: 'nasoofarmarket@gmail.com'   },
+  { icon: <FaClock />,       text: 'Lundi - Dimanche : 7h – 22h30'      },
 ];
 
 // ─────────────────────────────────────────────────────────────
@@ -349,8 +349,7 @@ function Footer() {
                 <SocialIcon key={label} href={href} icon={icon} label={label} />
               ))}
             </div>
-
-            {/* Label newsletter */}
+          {/* 
             <p style={{
               fontSize: '11px', fontWeight: '600',
               color: 'rgba(255,255,255,0.50)',
@@ -360,7 +359,7 @@ function Footer() {
               Newsletter
             </p>
 
-            {/* Input + bouton */}
+            {/* Input + bouton 
             <div style={{ display: 'flex' }}>
               <input
                 type="email"
@@ -407,7 +406,8 @@ function Footer() {
                 <FiSend style={{ fontSize: '12px' }} />
                 OK
               </button>
-            </div>
+            </div> 
+          */}
 
             <p style={{ fontSize: '11px', color: 'rgba(255,255,255,0.28)', marginTop: '7px' }}>
               Offres et nouveautés en avant-première.

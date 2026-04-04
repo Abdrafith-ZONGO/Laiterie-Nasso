@@ -275,7 +275,7 @@ function Accueil() {
             }}>
               Voir nos produits <FiArrowRight style={{ fontSize: '15px' }} />
             </a>
-            <Link to="/histoire" style={{
+            <Link to="/apropos" style={{
               display:        'inline-flex', alignItems: 'center', gap: '8px',
               padding:        '13px 28px', borderRadius: '99px',
               border:         '2px solid rgba(255,255,255,0.45)',
@@ -283,7 +283,7 @@ function Accueil() {
               color:          '#fff', fontSize: '14px', fontWeight: '500',
               textDecoration: 'none',
             }}>
-              Notre histoire
+              A propros de nous
             </Link>
           </div>
         </div>
