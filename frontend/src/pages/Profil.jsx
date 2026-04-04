@@ -25,7 +25,7 @@ const C = {
 // ─────────────────────────────────────────
 // MODAL CHANGEMENT MOT DE PASSE
 // ─────────────────────────────────────────
-function ModalMotDePasse({ onClose, onSuccess }) {
+function ModalMotDePasse({ onClose, onSuccess, userId }) {
   const [form, setForm] = useState({
     ancienMdp: '',
     nouveauMdp: '',
@@ -53,7 +53,7 @@ function ModalMotDePasse({ onClose, onSuccess }) {
     setErreur('');
     try {
       // Appel API pour changer le mot de passe
-      await modifierUtilisateur(1, { password: form.nouveauMdp }); // À adapter avec l'ID réel
+      await modifierUtilisateur(userId, { password: form.nouveauMdp });
       onSuccess();
       onClose();
     } catch (err) {
@@ -244,7 +244,7 @@ function Profil() {
     const confirmation = window.confirm('Voulez-vous vraiment enregistrer les modifications ?');
     if (!confirmation) return;
     try {
-      await modifierUtilisateur(user.id, form);
+      await modifierUtilisateur(profil.id, form);
       setProfil({ ...profil, ...form });
       setEdition(false);
       setMessage('Informations mises à jour avec succès');
@@ -428,6 +428,7 @@ function Profil() {
                   }}
                 />
               </div>
+        </form>
 
               {/* Boutons d'action */}
               <div style={{
@@ -464,7 +465,8 @@ function Profil() {
                   ) : (
                     <>
                       <button
-                        type="submit"
+                        type="button"
+                        onClick={handleSubmit}
                         style={{
                           display: 'flex',
                           alignItems: 'center',
@@ -479,7 +481,7 @@ function Profil() {
                           cursor: 'pointer',
                         }}
                       >
-                        <FiSave />
+                        <FiSave type="submit" />
                         Enregistrer
                       </button>
                       <button
@@ -530,7 +532,7 @@ function Profil() {
                   Changer mot de passe
                 </button>
               </div>
-            </form>
+   
           </div>
         </div>
 
@@ -561,6 +563,7 @@ function Profil() {
       {/* Modal changement mot de passe */}
       {modalMdp && (
         <ModalMotDePasse
+          userId={profil.id}
           onClose={() => setModalMdp(false)}
           onSuccess={() => setMessage('Mot de passe modifié avec succès')}
         />
